@@ -14,12 +14,10 @@ class Anime():
     def get_all_animes():
         return get_all()
 
+
     def create_anime(self):
         data = self.__dict__
-      
-        
-        create_new(data)
-        return data
+        return create_new(data)
     
     @staticmethod
     def check_data(data):

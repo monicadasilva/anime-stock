@@ -12,11 +12,23 @@ def create_new(data):
     query = 'INSERT INTO animes (anime, released_date, seasons) VALUES (%s, %s, %s)'
     cur.execute(query, new_animes)
 
+
+    cur.execute("""
+                SELECT * FROM animes WHERE anime like (%s);
+                """,
+                (data['anime'],),
+        ) 
+        
+    datas = cur.fetchall()
+    
+    FIELDNAMES = ['id', 'anime', 'released_date', 'seasons']
+    processed =[dict(zip(FIELDNAMES, row)) for row in datas]
+    
     conn.commit()
     cur.close()
     conn.close()
 
-    return data
+    return {'data': processed}, 200
 
 
 def get_all():
